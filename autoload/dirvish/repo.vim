@@ -1,7 +1,7 @@
 
 function! s:ChangeToSvnDirvish(directory)
     0,$delete _
-    exec printf('.!svn ls "%s"', a:directory)
+    exec printf(".!svn ls '%s'", a:directory)
     let b:dirvish_repo_curpath = a:directory
 endf
 
@@ -17,7 +17,7 @@ function! s:SvnDirvishOpen(file)
         call s:ChangeToSvnDirvish(file)
     else
         0,$delete _
-        exec printf('.!svn cat "%s"', file)
+        exec printf(".!svn cat '%s'", file)
         exec 'file svn://'. file
     endif
 endf
