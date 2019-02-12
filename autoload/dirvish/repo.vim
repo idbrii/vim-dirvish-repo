@@ -1,7 +1,7 @@
 
 function! s:ChangeToSvnDirvish(directory)
     0,$delete _
-    exec printf(".!svn ls '%s'", a:directory)
+    call dirvish#repo#{b:dirvish_repo_scm}#open_directory(a:directory)
     let b:dirvish_repo_curpath = a:directory
 endf
 
@@ -17,8 +17,7 @@ function! s:SvnDirvishOpen(file)
         call s:ChangeToSvnDirvish(file)
     else
         0,$delete _
-        exec printf(".!svn cat '%s'", file)
-        exec 'file svn://'. file
+        call dirvish#repo#{b:dirvish_repo_scm}#open_file(file)
     endif
 endf
 
@@ -31,6 +30,7 @@ endf
 function! dirvish#repo#ls()
     exec 'cd '. resolve(expand('%:p:h'))
     silent Scratch dirvish
+    let b:dirvish_repo_scm = 'svn'
     silent call s:ChangeToSvnDirvish(fnamemodify('.', ':p:h'))
     nnoremap <buffer> <Plug>(dirvish_repo_open) :<C-u>silent call <SID>SelectLineInSvnDirvish()<CR>
     nnoremap <buffer> <Plug>(dirvish_repo_up)   :<C-u>silent call <SID>ChangeToParentSvnDirvish()<CR>
