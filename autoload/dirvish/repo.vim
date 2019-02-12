@@ -32,9 +32,11 @@ endf
 
 function! s:FindScm()
     for scm in g:dirvish_repo_scm
-        let found = dirvish#repo#{scm}#find_repo()
-        if found != v:false
-            return found
+        let marker = dirvish#repo#{scm}#get_root_marker()
+        let root = dirvish#repo#find_repo_root(marker)
+        if root != v:false
+            let b:dirvish_repo_root = root
+            return scm
         endif
     endfor
     return v:false
@@ -55,3 +57,13 @@ function! dirvish#repo#ls()
     nmap <buffer> i <Plug>(dirvish_repo_open)
     nmap <buffer> - <Plug>(dirvish_repo_up)
 endf
+
+function! dirvish#repo#find_repo_root(marker)
+    let dotfile = findfile(a:marker, '.;/') " must be somewhere above us
+    if filereadable(dotfile)
+        return fnamemodify(dotfile, ':p:h')
+    else
+        return v:false
+    endif
+endf
+

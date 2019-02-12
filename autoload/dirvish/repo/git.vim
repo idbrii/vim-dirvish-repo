@@ -1,11 +1,5 @@
-function! dirvish#repo#git#find_repo()
-    let dotfile = findfile('.git', '.;/') " must be somewhere above us
-    if filereadable(dotfile)
-        let b:dirvish_repo_root = fnamemodify(dotfile, ':p:h')
-        return 'git'
-    else
-        return v:false
-    endif
+function! dirvish#repo#git#get_root_marker()
+    return '.git'
 endf
 
 function! dirvish#repo#git#open_directory(file)
