@@ -29,6 +29,7 @@ function! s:SelectLineInSvnDirvish()
 endf
 
 function! dirvish#repo#ls()
+    exec 'cd '. resolve(expand('%:p:h'))
     silent Scratch dirvish
     silent call s:ChangeToSvnDirvish(fnamemodify('.', ':p:h'))
     nnoremap <buffer> <Plug>(dirvish_repo_open) :<C-u>silent call <SID>SelectLineInSvnDirvish()<CR>
