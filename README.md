@@ -2,6 +2,16 @@
 
 Browse a repository like a local filesystem using dirvish
 
+Ever wish you could just peek at what's in source control, but don't want to
+use a gui browser or figure out and keep typing the commands into a terminal?
+With dirvish-repo, you can browse your repository from vim as if you had a
+pristine checkout.
+
+# Supported SCM
+
+* git, svn
+
+[New scm support goes here](https://github.com/idbrii/vim-dirvish-repo/tree/master/autoload/dirvish/repo).
 
 # Recommended accompanying plugins
 
