@@ -1,3 +1,4 @@
+let g:dirvish_repo_scm = get(g:, 'dirvish_repo_scm', ['git', 'svn'])
 
 function! s:ChangeToSvnDirvish(directory)
     0,$delete _
@@ -29,10 +30,24 @@ function! s:SelectLineInSvnDirvish()
     return s:SvnDirvishOpen(file)
 endf
 
+function! s:FindScm()
+    for scm in g:dirvish_repo_scm
+        let found = dirvish#repo#{scm}#find_repo()
+        if found != v:false
+            return found
+        endif
+    endfor
+    return v:false
+endf
+
 function! dirvish#repo#ls()
     exec 'cd '. resolve(expand('%:p:h'))
     silent Scratch dirvish
-    let b:dirvish_repo_scm = 'svn'
+    let b:dirvish_repo_scm = s:FindScm()
+    if b:dirvish_repo_scm == v:false
+        echoerr 'Failed to find scm.'
+        return
+    endif
     silent call s:ChangeToSvnDirvish(fnamemodify('.', ':p:h'))
     nnoremap <buffer> <Plug>(dirvish_repo_open) :<C-u>silent call <SID>SelectLineInSvnDirvish()<CR>
     nnoremap <buffer> <Plug>(dirvish_repo_up)   :<C-u>silent call <SID>ChangeToParentSvnDirvish()<CR>
