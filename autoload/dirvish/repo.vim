@@ -14,7 +14,9 @@ function! s:SvnDirvishOpen(file)
     let file = a:file
     let is_directory = file =~# '/$'
     if is_directory
-        call s:ChangeToSvnDirvish(file)
+        " :h will just remove a trailing /, so strip that now so - jumps
+        " straight to parent instead of us and then parent.
+        call s:ChangeToSvnDirvish(fnamemodify(file, ':h'))
     else
         0,$delete _
         call dirvish#repo#{b:dirvish_repo_scm}#open_file(file)
