@@ -46,7 +46,16 @@ endf
 
 function! dirvish#repo#ls()
     exec 'cd '. resolve(expand('%:p:h'))
-    silent Scratch dirvish
+    if exists(':Scratch') == 2
+        silent Scratch dirvish
+    else
+        vnew
+        setlocal buftype=nofile
+        setlocal bufhidden=hide
+        setlocal noswapfile
+        setlocal buflisted
+        setfiletype dirvish
+    endif
     let b:dirvish_repo_scm = s:FindScm()
     if b:dirvish_repo_scm == v:false
         echoerr 'Failed to find scm.'
