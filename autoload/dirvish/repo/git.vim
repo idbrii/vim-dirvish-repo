@@ -12,14 +12,14 @@ function! s:get_repo_path(disk_path)
 endf
 
 function! dirvish#repo#git#open_directory(file)
-    exec printf(".!git ls-tree --full-tree --full-name --name-only HEAD:'%s'", s:get_repo_path(a:file))
+    exec printf('.!git ls-tree --full-tree --full-name --name-only HEAD:"%s"', s:get_repo_path(a:file))
     " HACK: ls-tree doesn't distinguish files form folders, so assume things
     " with dots are files and everything else is a folder.
     %sm,^[^.]*$,&/,ge
 endf
 
 function! dirvish#repo#git#open_file(file)
-    exec printf(".!git show HEAD:'%s'", s:get_repo_path(a:file))
+    exec printf('.!git show HEAD:"%s"', s:get_repo_path(a:file))
     exec 'file git://'. a:file
 endf
 
