@@ -21,6 +21,8 @@ function! s:SvnDirvishOpen(file)
     else
         0,$delete _
         call dirvish#repo#{b:dirvish_repo_scm}#open_file(file)
+        filetype detect
+        setlocal bufhidden=delete
     endif
 endf
 
