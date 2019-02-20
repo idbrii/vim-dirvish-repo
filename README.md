@@ -2,6 +2,7 @@
 
 Browse a repository like a local filesystem using dirvish
 
+
 # Recommended accompanying plugins
 
 vim-dirvish-repo has no hard dependencies, but I'd recommend you use these plugins.
@@ -12,3 +13,9 @@ vim-dirvish-repo has no hard dependencies, but I'd recommend you use these plugi
       in repo-space.
 * [itchy.vim](https://github.com/idbrii/itchy.vim)
     * Nicer scratch split for the browser window.
+
+
+# License
+
+Dual licensed under the MIT License and GNU General Public License v3
+(for compatibility with dirvish).
