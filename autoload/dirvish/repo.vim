@@ -69,9 +69,20 @@ function! dirvish#repo#ls()
     nmap <buffer> - <Plug>(dirvish_repo_up)
 endf
 
-function! dirvish#repo#find_repo_root(marker)
-    let dotfile = findfile(a:marker, '.;/') " must be somewhere above us
+function! s:find_file_or_dir(query, path)
+    let dotfile = findfile(a:query, a:path)
     if filereadable(dotfile)
+        return dotfile
+    endif
+    let dotfile = finddir(a:query, a:path)
+    if isdirectory(dotfile)
+        return dotfile
+    endif
+    return ''
+endf
+function! dirvish#repo#find_repo_root(marker)
+    let dotfile = s:find_file_or_dir(a:marker, '.;/') " must be somewhere above us
+    if len(dotfile) > 0
         return fnamemodify(dotfile, ':p:h')
     else
         return v:false
